@@ -4,7 +4,6 @@ import { Product } from '../schemas/products.schema';
 import { AppService } from '../app.service';
 import { CreateProductDto } from './product/create-product.dto';
 import { UpdateProductDto } from './product/update-product.dto';
-import { getAllProductsDto } from './product/get-all-product.dto';
 
 
 @ApiTags('Product')
@@ -19,7 +18,6 @@ export class ProductController {
 
   @Get('products')
   async getProducts(
-    @Query() query: getAllProductsDto
   ): Promise<Product[]> {
     return await this.appService.getProducts();
   }
