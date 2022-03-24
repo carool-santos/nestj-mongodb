@@ -27,10 +27,6 @@ export class AppService {
      return this.getProductById(id)
   }
 
-  async updateStatusProduct(id: string, product: Product){
-    await this.productModel.updateOne({_id: id}, product).exec();
-    return this.getProductById(id)
- }
    async deleteProduct(id: string){
     return await this.productModel.findByIdAndDelete({_id:id}).exec();
   }

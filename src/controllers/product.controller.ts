@@ -1,22 +1,26 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Product } from 'src/schemas/products.schema';
+import { Product } from '../schemas/products.schema';
 import { AppService } from '../app.service';
+import { CreateProductDto } from './product/create-product.dto';
+import { UpdateProductDto } from './product/update-product.dto';
+import { getAllProductsDto } from './product/get-all-product.dto';
+
 
 @ApiTags('Product')
-
-
 @Controller('product')
 export class ProductController {
   constructor(private readonly appService: AppService) {}
 
   @Post()
-  async createProduct(@Body()product: Product): Promise<Product>{
-    return this.appService.createProduct(product)
+  async createProduct(@Body()createProductDto: CreateProductDto): Promise<Product>{
+    return this.appService.createProduct(createProductDto)
   }
 
   @Get('products')
-  async getProducts(): Promise<Product[]> {
+  async getProducts(
+    @Query() query: getAllProductsDto
+  ): Promise<Product[]> {
     return await this.appService.getProducts();
   }
 
@@ -28,13 +32,8 @@ export class ProductController {
 
 
   @Put(':id')
-  async updateProduct(@Param('id') id: string, @Body()product: Product): Promise<Product> {
-    return await this.appService.updateProduct(id, product);
-  }
-
-  @Patch('/:id/status')
-  async updateStatusProduct(@Param('id') id: string, @Body()product: Product): Promise<Product> {
-    return await this.appService.updateProduct(id, product);
+  async updateProduct(@Param('id') id: string, @Body()updateProductDto: UpdateProductDto): Promise<Product> {
+    return await this.appService.updateProduct(id, updateProductDto);
   }
 
   @Delete(':id')

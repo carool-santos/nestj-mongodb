@@ -15,8 +15,6 @@ export class Product  extends Document{
   @Prop()
   value: number;
 
-  @Prop()
-  status: boolean;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);
